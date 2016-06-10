@@ -1,6 +1,6 @@
 all: main
 
-projname = dynmem
+projname = nextday 
 compile = g++
 
 CPP_FILES := $(wildcard ./*.cpp)

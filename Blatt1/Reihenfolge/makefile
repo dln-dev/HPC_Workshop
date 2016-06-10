@@ -1,6 +1,6 @@
 all: main
 
-projname = dynmem
+projname = reihenfolge 
 compile = g++
 
 CPP_FILES := $(wildcard ./*.cpp)
