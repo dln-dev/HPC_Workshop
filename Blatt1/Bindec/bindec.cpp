@@ -4,14 +4,14 @@ using namespace std;
 
 static void binary(unsigned int input) {
 	unsigned int remainder;
-	remainder = 0; // Y U NO WORK WITH STATIC
+	remainder = 0; 
 
 	if(input <= 1) {
 		cout << input;
 		return;
 	}
 
-	remainder = input%2;
+	remainder = input % 2;
 	binary(input >> 1);
 	cout << remainder;
 }

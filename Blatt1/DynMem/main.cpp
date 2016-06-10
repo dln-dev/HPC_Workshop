@@ -2,11 +2,11 @@
 
 using namespace std;
 
-int main(void)
+int main(int argc, char* argv[])
 {
 	unsigned short int n, k;
 	unsigned short int indent;
-	unsigned short int size = 8;
+	const unsigned short int size = atoi(argv[1]);
 	unsigned int **triangle;
 
 	// pointer setup	
