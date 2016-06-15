@@ -4,9 +4,9 @@ void bubbleSort(double array[], const short int aSize) {
 	short int i, j;
 	bool swapped = true;
 	
-	for(short int i = 0; (i < aSize) && swapped; i++) {
+	for(i = 0; (i < aSize) && swapped; i++) {
 		swapped = false;
-		for(short int j = 0; j < (aSize-1); j++) {
+		for(j = 0; j < (aSize-1); j++) {
 			if(array[j+1] < array[j]) {
 				array[j] += array[j+1];
 				array[j+1] = array[j] - array[j+1];

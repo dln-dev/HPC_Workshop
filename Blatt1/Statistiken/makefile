@@ -1,14 +1,16 @@
-all: main
+all: Aufgabe_01_3a.out Aufgabe_01_3b.out 
 
+projname = Aufgabe_01_3
 compile = g++
 
+CPP_FILES := $(wildcard ./*.cpp)
 CC_FLAGS := -O3 -Wall
 
-main: $(projname)a.cpp 
-	$(compile) $(CC_FLAGS) Aufgabe_01_3a.cpp -o Aufgabe_01_3a
-	$(compile) $(CC_FLAGS) Aufgabe_01_3b.cpp -o Aufgabe_01_3b
-	$(compile) $(CC_FLAGS) Aufgabe_01_3c.cpp -o Aufgabe_01_3c
+Aufgabe_01_3a.out: Aufgabe_01_3a.cpp
+	$(compile) $(CC_FLAGS) $^ -o $@
+
+Aufgabe_01_3b.out: Aufgabe_01_3b.cpp arrayMagic.cpp
+	$(compile) $(CC_FLAGS) $^ -o $@
 
 clean:
-	rm -f Aufgabe_01_3
-
+	rm -f Aufgabe_01_3*.out

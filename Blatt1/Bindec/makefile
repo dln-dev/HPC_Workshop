@@ -1,6 +1,6 @@
 all: main
 
-projname = bindec
+projname = bindec.out
 compile = g++
 
 CPP_FILES := $(wildcard ./*.cpp)

@@ -1,6 +1,6 @@
 all: main
 
-projname = nextday 
+projname = nextday.out
 compile = g++
 
 CPP_FILES := $(wildcard ./*.cpp)

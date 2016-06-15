@@ -1,6 +1,6 @@
 all: main
 
-projname = dynmem
+projname = dynmem.out
 compile = g++
 
 CPP_FILES := $(wildcard ./*.cpp)

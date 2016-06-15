@@ -43,8 +43,8 @@ int main(int argc, char* argv[])
 	}
 
 	// cleanup	
-	delete triangle[0];
-	delete triangle;
+	delete[] triangle[0];
+	delete[] triangle;
 
 	return 0;
 }

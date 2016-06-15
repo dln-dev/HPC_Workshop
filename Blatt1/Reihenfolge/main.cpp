@@ -14,7 +14,7 @@ int main(void)
 	}
 
 	cout << "Die Zahlen des Arrays in umgekehrter Reihenfolge: ";
-	for(int i = 0; i < 15; i++)
+	for(short int i = 0; i < 15; i++)
 		cout << feld[i] << " ";
 	cout << endl;
 

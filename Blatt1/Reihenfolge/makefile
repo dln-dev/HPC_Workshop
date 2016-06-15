@@ -1,6 +1,6 @@
 all: main
 
-projname = reihenfolge 
+projname = reihenfolge.out 
 compile = g++
 
 CPP_FILES := $(wildcard ./*.cpp)

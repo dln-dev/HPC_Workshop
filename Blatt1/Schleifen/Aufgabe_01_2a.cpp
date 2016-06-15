@@ -10,7 +10,7 @@ int main(void)
 	unsigned long int b = 0;
 	unsigned long int result = 1;
 
-	for(int i = 1; i < n; i++) {
+	for(unsigned int i = 1; i < n; i++) {
 		b = a;
 		a = result;
 		result = a + b;

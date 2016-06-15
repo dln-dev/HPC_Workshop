@@ -1,6 +1,6 @@
 all: main
 
-projname = helloworld 
+projname = helloworld.out 
 compile = g++
 
 CPP_FILES := $(wildcard ./*.cpp)
