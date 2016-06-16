@@ -1,7 +1,7 @@
 all: main
 
 projname = euler.out 
-compile = icpc
+compile = g++
 
 CPP_FILES := $(wildcard ./*/*.cpp)
 CC_FLAGS := -O3 -unroll -Wall
