@@ -1,0 +1,3 @@
+[submodule "Blatt2/Euler/cmagic"]
+	path = Blatt2/Euler/cmagic
+	url = https://github.com/dln-dev/cmagic
