@@ -1,27 +1,34 @@
 #pragma once
 
-#include "CArray.h"
+#include <iostream>
 
 class CMatrix {
 	private:
-	int n, m; // rows, columns
+	int rows, cols;
 	int **matrix;
 
 	public:
-	CMatrix(int values[][dim], unsigned int dim) : 
+	CMatrix(int **values, const unsigned short int dim) : 
 		CMatrix(values, dim, dim) {}
-	CMatrix(unsigned int rowDim, unsigned int colDim) :
+	CMatrix(const unsigned short int rowDim, const unsigned short int colDim) :
 		CMatrix(nullptr, rowDim, colDim) {}
-	CMatrix(int values[][colDim], unsigned int rowDim, unsigned int colDim);
-	CMatrix(const CMatrix &obj);
+	CMatrix(int **values, const unsigned short int rowDim, const unsigned short int colDim);
+	CMatrix(const CMatrix &values) : 
+		CMatrix(nullptr, values.getRows(), values.getCols()) {this->matSum(&values);}
 
-	void matSum(CMatrix *mat);
-	void matMult(CMatrix *mat);
+	void matSum(const CMatrix *mat);
+	void matMult(const CMatrix *mat);
 	void transpose();
 	void inverse();
 	long int scalarProduct(CMatrix *mat); // multiplies, then sums elements at same locations
 
-	CMatrix operator=(const CMatrix &mat);
+	unsigned short int getRows() const;
+	unsigned short int getCols() const;
+	int getElem(unsigned short int n, unsigned short int m) const; // start counting at 0
+
+	void print();
+
+	CMatrix& operator=(const CMatrix &mat);
 
 	~CMatrix();
 };

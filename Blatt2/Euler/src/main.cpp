@@ -21,6 +21,8 @@ if(argc == 2) {
 	double mathE = exp(x);
 	float tolerance = 1.0E-6;
 
+	precision = 2 - log10(tolerance);
+
 	cout << "\nx:\t" << x << "\nType:\t" << typeid(x).name() << endl;
 
 	for(i = 0; i < n; i++) 
@@ -32,7 +34,6 @@ if(argc == 2) {
 	}
 
 	//precision = round(1 - log10(abs(loopE - mathE)));
-	precision = 2 - log10(tolerance);
 
 	cout.precision(precision);
 
