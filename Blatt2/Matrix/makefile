@@ -3,7 +3,7 @@ all: main
 projname = matrix.out
 compile = g++
 
-CPP_FILES := $(wildcard ./*.cpp)
+CPP_FILES := $(wildcard ./*/*.cpp)
 CC_FLAGS := -O3 -Wall
 
 main: $(CPP_FILES)
