@@ -1,3 +1,5 @@
 pbsjob.pbs
 *.out
 *.o
+.cproject
+.project

@@ -1,10 +1,12 @@
 #include "CMatrix.h"
 
+using namespace std;
+
 CMatrix::CMatrix(float **values, const unsigned short int rowDim, const unsigned short int colDim) {
 	rows = rowDim;
 	cols = colDim;
 
-	matrix = dynMatrix(rowDim, colDim);
+	matrix = dynMatrix<float>(rowDim, colDim);
 
 	if(values == nullptr)
 		for(i = 0; i < rowDim; i++)
@@ -22,39 +24,41 @@ void CMatrix::matSum(const CMatrix *summand) {
 			for(j = 0; j < cols; j++)
 				matrix[i][j] += summand->getElem(i, j);
 	else
-		std::cerr << "non-matching matrix dimensions in matSum" << std::endl;
+		cerr << "non-matching matrix dimensions in matSum" << endl;
 }
 
 void CMatrix::matMult(const CMatrix *multiplicant) {
 	if(cols == multiplicant->getRows()) {
-		float **buffer = dynMatrix(rows, multiplicant->getCols());
+		static unsigned short int multiplicantCols = multiplicant->getCols();
+
+		float **buffer = dynMatrix<float>(rows, multiplicantCols);
 
 		for(i = 0; i < rows; i++)
-			for(j = 0; j < multiplicant->getCols(); j++)
+			for(j = 0; j < multiplicantCols; j++)
 				for(k = 0; k < cols; k++)
 					buffer[i][j] += matrix[i][k] * multiplicant->getElem(k,j);
 
 		delete[] matrix[0];
 		delete[] matrix;
 
-		cols = multiplicant->getCols();
+		cols = multiplicantCols;
 		matrix = buffer;
 	}
 	else
-		std::cerr << "non-matching dimensions in matMult" << std::endl;
+		cerr << "non-matching dimensions in matMult" << endl;
 
 }
 
 void CMatrix::transpose() {
 	if(rows == cols) 
 		for(i = 0; i < rows; i++)
-			for(j = i+1; j < cols; j++) {
+			for(j = i + 1; j < cols; j++) {
 				matrix[i][j] += matrix[j][i];
 				matrix[j][i]  = matrix[i][j] - matrix[j][i];
 				matrix[i][j] -= matrix[j][i];
 			}
 	else {
-		float **buffer = dynMatrix(cols, rows);
+		float **buffer = dynMatrix<float>(cols, rows);
 
 		for(i = 0; i < rows; i++)
 			for(j = 0; j < cols; j++)
@@ -64,8 +68,9 @@ void CMatrix::transpose() {
 		delete[] matrix;
 
 		rows += cols;
-		cols = rows - cols;
+		cols  = rows - cols;
 		rows -= cols;
+
 		matrix = buffer;
 	}
 }
@@ -74,18 +79,17 @@ void CMatrix::inverse() {
 	if(rows == cols) {
 		int *a = new int[rows*cols];
 
-		if(LAPACKE_sgetrf(LAPACK_COL_MAJOR, rows, cols, matrix[0], cols, a) == 0)
-			std::cout << "success" << std::endl;
+		// careful! These only act on float matrices.
+		if(LAPACKE_sgetrf(LAPACK_COL_MAJOR, rows, cols, matrix[0], cols, a) != 0)
+			cerr << "LU decomposition failed" << endl;
 
-		if(LAPACKE_sgetri(LAPACK_COL_MAJOR, cols, matrix[0], cols, a) == 0)
-			std::cout << "successful again" << std::endl;
-		else
-			std::cerr << "singular matrix" << std::endl;
+		if(LAPACKE_sgetri(LAPACK_COL_MAJOR, cols, matrix[0], cols, a) != 0)
+			cerr << "inversion failed, matrix singular?" << endl;
 
 		delete[] a;
 	}
 	else
-		std::cout << "inverse only for square matrices" << std::endl;
+		cout << "inverse only for square matrices" << endl;
 }
 
 float CMatrix::scalarProduct(const CMatrix *vecMat) {
@@ -96,7 +100,7 @@ float CMatrix::scalarProduct(const CMatrix *vecMat) {
 			for(j = 0; j < cols; j++)
 				 result += matrix[i][j] * vecMat->getElem(i,j);
 	else 
-		std::cerr << "non-matching dimensions in scalarProduct" << std::endl;
+		cerr << "non-matching dimensions in scalarProduct" << endl;
 
 	return result;
 }
@@ -109,18 +113,19 @@ unsigned short int CMatrix::getCols() const {
 	return cols;
 }
 
-float CMatrix::getElem(const unsigned short int n, const unsigned short int m) const {
-	return matrix[n][m];
+float CMatrix::getElem(const unsigned short int m, const unsigned short int n) const {
+	// todo: test for oob
+	return matrix[m][n];
 }
 
 void CMatrix::print() {
 	for(i = 0; i < rows; i++) {
-		std::cout << "\n";
+		cout << "\n";
 		for(j = 0; j < cols; j++)
-			std::cout << matrix[i][j] << " ";
+			cout << matrix[i][j] << " ";
 	}
 
-	std::cout << "\n\n" << std::flush;
+	cout << "\n\n" << flush;
 }
 
 CMatrix& CMatrix::operator=(const CMatrix &mat) {
@@ -128,7 +133,7 @@ CMatrix& CMatrix::operator=(const CMatrix &mat) {
 		rows = mat.getRows();
 		cols = mat.getCols();
 
-		float **buffer = dynMatrix(rows, cols);
+		float **buffer = dynMatrix<float>(rows, cols);
 
 		for(i = 0; i < rows; i++)
 			for(j = 0; j < cols; j++)

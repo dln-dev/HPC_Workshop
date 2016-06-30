@@ -8,7 +8,7 @@
  *
  * @brief Dies ist die Matrixklasse die die Standardmethoden implementiert.
  * @author dln-dev 
- * @version 1.1
+ * @version 0.1
  * @date 30.06.2016
  *
  */
@@ -54,7 +54,7 @@ class CMatrix {
 	 *
 	 * @return das Skalarprodukt der aktuellen Matrix mit der uebergebenen
 	 */
-	float scalarProduct(const CMatrix *mat); // multiplies, then sums elements at same locations
+	float scalarProduct(const CMatrix *mat); // 2-norm 
 
 	unsigned short int getRows() const;
 	unsigned short int getCols() const;
