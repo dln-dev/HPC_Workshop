@@ -1,8 +1,40 @@
+/**
+ * @mainpage Dies ist das tolle Matrixprojekt
+ *
+ * @section Abschnitt Kompilierung
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *  */
+
+/**
+ *
+ *
+ * @section Abschnitt math. Grundlagen
+ *
+ *
+ *
+ *
+ *
+ *
+ *  */
+
 #include <iostream>
 #include "../CMatrix/CMatrix.h"
 #include <typeinfo>
 
 using namespace std;
+
+/**
+ * @brief dies ist das Hauptprogramm <br>
+ *
+ *
+ *
+ */
 
 int main(void) {
 	float  A_stat[][2] = {{1,2},{3,0}};
