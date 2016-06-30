@@ -1,6 +1,6 @@
 #include "CMatrix.h"
 
-CMatrix::CMatrix(int **values, const unsigned short int rowDim, const unsigned short int colDim) {
+CMatrix::CMatrix(float **values, const unsigned short int rowDim, const unsigned short int colDim) {
 	rows = rowDim;
 	cols = colDim;
 
@@ -27,7 +27,7 @@ void CMatrix::matSum(const CMatrix *summand) {
 
 void CMatrix::matMult(const CMatrix *multiplicant) {
 	if(cols == multiplicant->getRows() && rows == multiplicant->getCols()) {
-		int **buffer = dynMatrix(rows, rows);
+		float **buffer = dynMatrix(rows, rows);
 
 		for(i = 0; i < rows; i++)
 			for(j = 0; j < rows; j++)
@@ -53,7 +53,7 @@ void CMatrix::transpose() {
 				matrix[i][j] -= matrix[j][i];
 			}
 	else {
-		int **buffer = dynMatrix(cols, rows);
+		float **buffer = dynMatrix(cols, rows);
 
 		for(i = 0; i < rows; i++)
 			for(j = 0; j < cols; j++)
@@ -67,11 +67,26 @@ void CMatrix::transpose() {
 }
 
 void CMatrix::inverse() {
-	LAPACKE_sgetri(LAPACK_ROW_MAJOR, cols, LAPACKE_sgetrf(LAPACK_ROW_MAJOR, rows, cols, matrix, cols), cols, )
+//	LAPACKE_sgetri(LAPACK_ROW_MAJOR, cols, LAPACKE_sgetrf(LAPACK_ROW_MAJOR, rows, cols, matrix, cols), cols, )
+	if(rows == cols) {
+		int *a = new int[rows*cols];
+
+		if(LAPACKE_sgetrf(LAPACK_COL_MAJOR, rows, cols, matrix[0], cols, a) == 0)
+			std::cout << "success" << std::endl;
+
+		if(LAPACKE_sgetri(LAPACK_COL_MAJOR, cols, matrix[0], cols, a) == 0)
+			std::cout << "successful again" << std::endl;
+		else
+			std::cerr << "singular matrix" << std::endl;
+
+		delete[] a;
+	}
+	else
+		std::cout << "inverse only for square matrices" << std::endl;
 }
 
-long int CMatrix::scalarProduct(const CMatrix *vecMat) {
-	static long int result = 0;
+float CMatrix::scalarProduct(const CMatrix *vecMat) {
+	static float result = 0;
 
 	if(rows == vecMat->getRows() && cols == vecMat->getCols()) 
 		for(i = 0; i < rows; i++)
@@ -91,7 +106,7 @@ unsigned short int CMatrix::getCols() const {
 	return cols;
 }
 
-int CMatrix::getElem(const unsigned short int n, const unsigned short int m) const {
+float CMatrix::getElem(const unsigned short int n, const unsigned short int m) const {
 	return matrix[n][m];
 }
 
@@ -112,7 +127,7 @@ CMatrix& CMatrix::operator=(const CMatrix &mat) {
 		matRows = mat.getRows();
 		matCols = mat.getCols();
 
-		int **buffer = dynMatrix(matRows, matCols);
+		float **buffer = dynMatrix(matRows, matCols);
 
 		for(i = 0; i < matRows; i++)
 			for(j = 0; j < matCols; j++)

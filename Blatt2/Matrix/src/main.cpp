@@ -7,14 +7,14 @@ using namespace std;
 int main(void) {
 	unsigned short int i, j;
 	
-	int ** mat = dynMatrix(3, 3);
+	float ** mat = dynMatrix(3, 3);
 	
 	for(i = 0; i < 3; i++)
 		for(j = 0; j < 3; j++)
 			mat[i][j] = (i+1)*j;
 
-	int b[][3] = {{1,2,3},{4,5,6},{7,8,9}};
-	int *b_dyn[3] = {b[0], b[1], b[2]};
+	float b[][3] = {{1,2,3},{4,5,6},{7,8,9}};
+	float *b_dyn[3] = {b[0], b[1], b[2]};
 
 	/*cout << c[1][1] << endl;
 	cout << typeid(c).name() << endl;
@@ -43,6 +43,10 @@ int main(void) {
 	mctrix = matrix;
 	cout << "test00";
 	mctrix.print();
+
+	matrix.inverse();
+
+	matrix.print();
 
 	delete mbtrix;
 	delete[] mat[0];
