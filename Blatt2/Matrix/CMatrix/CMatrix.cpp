@@ -26,17 +26,18 @@ void CMatrix::matSum(const CMatrix *summand) {
 }
 
 void CMatrix::matMult(const CMatrix *multiplicant) {
-	if(cols == multiplicant->getRows() && rows == multiplicant->getCols()) {
-		float **buffer = dynMatrix(rows, rows);
+	if(cols == multiplicant->getRows()) {
+		float **buffer = dynMatrix(rows, multiplicant->getCols());
 
 		for(i = 0; i < rows; i++)
-			for(j = 0; j < rows; j++)
+			for(j = 0; j < multiplicant->getCols(); j++)
 				for(k = 0; k < cols; k++)
 					buffer[i][j] += matrix[i][k] * multiplicant->getElem(k,j);
 
 		delete[] matrix[0];
 		delete[] matrix;
 
+		cols = multiplicant->getCols();
 		matrix = buffer;
 	}
 	else
@@ -62,12 +63,14 @@ void CMatrix::transpose() {
 		delete[] matrix[0];
 		delete[] matrix;
 
+		rows += cols;
+		cols = rows - cols;
+		rows -= cols;
 		matrix = buffer;
 	}
 }
 
 void CMatrix::inverse() {
-//	LAPACKE_sgetri(LAPACK_ROW_MAJOR, cols, LAPACKE_sgetrf(LAPACK_ROW_MAJOR, rows, cols, matrix, cols), cols, )
 	if(rows == cols) {
 		int *a = new int[rows*cols];
 
@@ -122,15 +125,13 @@ void CMatrix::print() {
 
 CMatrix& CMatrix::operator=(const CMatrix &mat) {
 	if(&mat != this) {
-		static unsigned short int matRows, matCols;
+		rows = mat.getRows();
+		cols = mat.getCols();
 
-		matRows = mat.getRows();
-		matCols = mat.getCols();
+		float **buffer = dynMatrix(rows, cols);
 
-		float **buffer = dynMatrix(matRows, matCols);
-
-		for(i = 0; i < matRows; i++)
-			for(j = 0; j < matCols; j++)
+		for(i = 0; i < rows; i++)
+			for(j = 0; j < cols; j++)
 				buffer[i][j] = mat.getElem(i, j);
 
 		delete[] matrix[0];

@@ -5,13 +5,6 @@
 using namespace std;
 
 int main(void) {
-	unsigned short int i, j;
-	
-	/*float ** mat = dynMatrix(3, 3);
-	for(i = 0; i < 3; i++)
-		for(j = 0; j < 3; j++)
-			mat[i][j] = (i+1)*j;*/
-
 	float  A_stat[][2] = {{1,2},{3,0}};
 	float *A_init[2] = {A_stat[0], A_stat[1]};
 	float  B_stat[][3] = {{4,6,8},{11,2,12},{3,5,16}};
@@ -29,6 +22,7 @@ int main(void) {
 	CMatrix A = CMatrix(A_init, 2, 2);
 	CMatrix B = CMatrix(B_init, 3, 3);
 	CMatrix H = CMatrix(H_init, 3, 3);
+	CMatrix C = A;
 
 	CMatrix b = CMatrix(b_init, 2, 1);
 	CMatrix u = CMatrix(u_init, 1, 3);
@@ -42,7 +36,10 @@ int main(void) {
 	u.print();
 	v.print();
 
+	C.inverse();
+	C.matMult(&A);
 
+	C.print();
 
 	/*cout << c[1][1] << endl;
 	cout << typeid(c).name() << endl;
