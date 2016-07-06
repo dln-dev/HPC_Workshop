@@ -2,6 +2,8 @@
 
 using namespace std;
 
+const long int CMatrix::cache_linesize = sysconf(_SC_LEVEL1_DCACHE_LINESIZE);
+
 CMatrix::CMatrix(float **values, const unsigned short int rowDim, const unsigned short int colDim) {
 	rows = rowDim;
 	cols = colDim;
@@ -90,6 +92,12 @@ void CMatrix::inverse() {
 	}
 	else
 		cout << "inverse only for square matrices" << endl;
+}
+
+void CMatrix::addRandom(const int min, const int max) {
+	for(i = 0; i < rows; i++)
+		for(j = 0; j < cols; j++)
+			matrix[i][j] += rand() % (max + 1) + min;
 }
 
 float CMatrix::scalarProduct(const CMatrix *vecMat) {

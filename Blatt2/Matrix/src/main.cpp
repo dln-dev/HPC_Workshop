@@ -1,40 +1,8 @@
-/**
- * @mainpage Dies ist das tolle Matrixprojekt
- *
- * @section Abschnitt Kompilierung
- *
- *
- *
- *
- *
- *
- *
- *  */
-
-/**
- *
- *
- * @section Abschnitt math. Grundlagen
- *
- *
- *
- *
- *
- *
- *  */
-
 #include <iostream>
 #include "../CMatrix/CMatrix.h"
 //#include <typeinfo>
 
 using namespace std;
-
-/**
- * @brief dies ist das Hauptprogramm <br>
- *
- *
- *
- */
 
 int main(void) {
 	float  A_stat[][2] = {{1,2},{3,0}};
@@ -55,12 +23,18 @@ int main(void) {
 	CMatrix B = CMatrix(B_init, 3, 3);
 	CMatrix H = CMatrix(H_init, 3, 3);
 	CMatrix C = A;
+	CMatrix R = CMatrix(10000, 10000, 1, 100);
+	CMatrix S = CMatrix(10000, 10000, 1, 100);
 
 	CMatrix b = CMatrix(b_init, 2, 1);
 	CMatrix u = CMatrix(u_init, 1, 3);
 	CMatrix v = CMatrix(v_init, 3, 1);
 
-	A.print();
+	cout << "Start matMult" << endl;
+
+	S.matMult(&R);
+
+	/*A.print();
 	B.print();
 	H.print();
 
@@ -72,6 +46,13 @@ int main(void) {
 	C.matMult(&A);
 
 	C.print();
+	C.addRandom(1,100);
+	C.print();*/
+	
+	/*for(unsigned short int i = 0; i < 10; i++)
+		cout << R.getElem(i,i) << " ";
+
+	cout << endl;*/
 
 	return 0;
 }
