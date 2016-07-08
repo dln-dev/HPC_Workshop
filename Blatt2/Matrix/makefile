@@ -4,8 +4,8 @@ projname = matrix.out
 compile = icpc 
 
 CPP_FILES := $(wildcard ./*/*.cpp)
-CC_FLAGS  := -O3 -std=c++11 -wd3802 -Wall -DMKL_LP64 -mkl=sequential
-PROF_FLAGS := $(CC_FLAGS) -fargument-noalias -fno-inline -pg -g
+CC_FLAGS  := -O3 -fargument-noalias -std=c++11 -wd3802 -Wall -DMKL_LP64 -mkl=sequential
+PROF_FLAGS := $(CC_FLAGS) -fno-inline -pg -g
 L_FLAGS   := -lmkl_lapack95_lp64
 
 main: $(CPP_FILES)

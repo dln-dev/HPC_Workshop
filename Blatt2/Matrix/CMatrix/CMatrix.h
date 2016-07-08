@@ -12,6 +12,9 @@ class CMatrix {
 	float **matrix;
 	static const long int cache_linesize;
 
+	float * getRow(const unsigned short int row) const;
+	float vectorMult(const float * vec1, const float * vec2, const unsigned short int vec_size) const;
+
 	public:
 
 	CMatrix(float **values, const unsigned short int dim) : 
@@ -26,7 +29,7 @@ class CMatrix {
 	CMatrix(float **values, const unsigned short int rowDim, const unsigned short int colDim);
 
 	void matSum(const CMatrix *mat);
-	void matMult(const CMatrix *mat);
+	void matMult(CMatrix *mat);
 	void transpose();
 	void inverse();
 	void addRandom(const int min, const int max);

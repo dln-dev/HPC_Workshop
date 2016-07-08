@@ -1,8 +1,10 @@
 #include <iostream>
 #include "../CMatrix/CMatrix.h"
+#include <chrono>
 //#include <typeinfo>
 
 using namespace std;
+using namespace std::chrono;
 
 int main(void) {
 	float  A_stat[][2] = {{1,2},{3,0}};
@@ -23,8 +25,8 @@ int main(void) {
 	CMatrix B = CMatrix(B_init, 3, 3);
 	CMatrix H = CMatrix(H_init, 3, 3);
 	CMatrix C = A;
-	CMatrix R = CMatrix(10000, 10000, 1, 100);
-	CMatrix S = CMatrix(10000, 10000, 1, 100);
+	CMatrix R = CMatrix(50000, 1000, 1, 100);
+	CMatrix S = CMatrix(1000, 50000, 1, 100);
 
 	CMatrix b = CMatrix(b_init, 2, 1);
 	CMatrix u = CMatrix(u_init, 1, 3);
@@ -32,7 +34,12 @@ int main(void) {
 
 	cout << "Start matMult" << endl;
 
+	high_resolution_clock::time_point t1 = high_resolution_clock::now();
 	S.matMult(&R);
+	high_resolution_clock::time_point t2 = high_resolution_clock::now();
+	auto duration = duration_cast<seconds>(t2 - t1).count();
+
+	cout << "computing time ~ " << duration << "s " << endl;
 
 	/*A.print();
 	B.print();
